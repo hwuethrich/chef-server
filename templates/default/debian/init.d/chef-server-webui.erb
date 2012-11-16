@@ -29,8 +29,8 @@ test -x $DAEMON || exit 0
 
 if [ ! -d <%= node["chef_server"]["run_path"] %> ]; then
   mkdir <%= node["chef_server"]["run_path"] %>
-  chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 fi
+chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 
 DAEMON_OPTS="-p $PORT -e production -d -a $ADAPTER -P $PIDFILE -L $LOGFILE -C $CONFIG -u $USER -G $GROUP"
 
@@ -120,4 +120,3 @@ case "$1" in
 esac
 
 exit 0
-

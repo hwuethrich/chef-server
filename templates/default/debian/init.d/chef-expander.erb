@@ -28,8 +28,8 @@ test -x $DAEMON || exit 0
 
 if [ ! -d <%= node["chef_server"]["run_path"] %> ]; then
   mkdir <%= node["chef_server"]["run_path"] %>
-  chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 fi
+chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 
 DAEMON_OPTS="-d -c $CONFIG -P $PIDFILE -L $LOGFILE $CHEF_EXPANDER_ARGS"
 
@@ -173,4 +173,3 @@ case "$1" in
 esac
 
 exit 0
-

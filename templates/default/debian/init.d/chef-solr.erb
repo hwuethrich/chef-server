@@ -29,8 +29,8 @@ test -x $DAEMON || exit 0
 
 if [ ! -d <%= node["chef_server"]["run_path"] %> ]; then
   mkdir <%= node["chef_server"]["run_path"] %>
-  chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 fi
+chown $USER:$GROUP <%= node["chef_server"]["run_path"] %>
 
 if [ ! -f $LOGFILE ]; then
   touch $LOGFILE
