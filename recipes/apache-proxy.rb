@@ -52,14 +52,18 @@ bash "Create SSL Certificates" do
   not_if { ::File.exists?("/etc/chef/certificates/chef-server-proxy.pem") }
 end
 
-apache_site "default" do
-  enable false
-end
-
 web_app "chef-server-proxy" do
   template       "chef_server.conf.erb"
   server_name    node['chef_server']['proxy']['server_name']
   server_aliases node['chef_server']['proxy']['aliases']
   port           node['chef_server']['proxy']['port']
   log_dir        node['apache']['log_dir']
+end
+
+apache_site "default" do
+  enable false
+end
+
+execute "apache2-reload" do
+  command "service apache2 reload"
 end
