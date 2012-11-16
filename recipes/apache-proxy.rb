@@ -23,7 +23,7 @@ root_group = value_for_platform(
   "default" => "root"
 )
 
-node['apache']['listen_ports'] << "443" unless node['apache']['listen_ports'].include?("443")
+# node['apache']['listen_ports'] << "443" unless node['apache']['listen_ports'].include?("443")
 
 include_recipe "apache2"
 include_recipe "apache2::mod_ssl"
@@ -52,10 +52,14 @@ bash "Create SSL Certificates" do
   not_if { ::File.exists?("/etc/chef/certificates/chef-server-proxy.pem") }
 end
 
+apache_site "default" do
+  enable false
+end
+
 web_app "chef-server-proxy" do
-  template "chef_server.conf.erb"
-  server_name node['chef_server']['proxy']['server_name']
+  template       "chef_server.conf.erb"
+  server_name    node['chef_server']['proxy']['server_name']
   server_aliases node['chef_server']['proxy']['aliases']
-  port node['chef_server']['proxy']['port']
-  log_dir node['apache']['log_dir']
+  port           node['chef_server']['proxy']['port']
+  log_dir        node['apache']['log_dir']
 end
