@@ -24,9 +24,6 @@ root_group = value_for_platform(
 )
 
 node['apache']['listen_ports'] << "443" unless node['apache']['listen_ports'].include?("443")
-if node['chef_server']['webui_enabled']
-  node['apache']['listen_ports'] << "444" unless node['apache']['listen_ports'].include?("444")
-end
 
 include_recipe "apache2"
 include_recipe "apache2::mod_ssl"
@@ -57,11 +54,8 @@ end
 
 web_app "chef-server-proxy" do
   template "chef_server.conf.erb"
-  api_server_name node['chef_server']['proxy']['api_server_name']
-  api_server_aliases node['chef_server']['proxy']['api_aliases']
-  api_port node['chef_server']['proxy']['api_port']
-  webui_server_name node['chef_server']['proxy']['webui_server_name']
-  webui_server_aliases node['chef_server']['proxy']['webui_aliases']
-  webui_port node['chef_server']['proxy']['webui_port']
+  server_name node['chef_server']['proxy']['server_name']
+  server_aliases node['chef_server']['proxy']['aliases']
+  port node['chef_server']['proxy']['port']
   log_dir node['apache']['log_dir']
 end
