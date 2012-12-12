@@ -63,7 +63,3 @@ end
 apache_site "default" do
   enable false
 end
-
-execute "apache2-reload" do
-  command "service apache2 reload"
-end
